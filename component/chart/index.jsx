@@ -1,15 +1,22 @@
-import React from "react";
-import ReactApexChart from "react-apexcharts";
+import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import style from "../../styles/styles.module.css";
 import { Row, Col } from "react-bootstrap";
-import {
-  FaEthereum,
-  FaBitcoin,
-  FaCopyright,
-  FaCodepen,
-  FaChartLine,
-} from "react-icons/fa";
+import { FaEthereum, FaBitcoin, FaCodepen, FaChartLine } from "react-icons/fa";
+
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
+
 const CryptoCharts = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
   const bitcoinData = [
     { x: "2023-01-01", y: 35000 },
     { x: "2023-01-02", y: 35500 },
@@ -131,27 +138,11 @@ const CryptoCharts = () => {
   };
 
   return (
-    <div
-      className="mx-5 mt-5"
-      style={{ display: "flex", justifyContent: "space-around", width: "90%" }}
-    >
-      <div className={style.chartContainer}>
-        <h3 data-testid="etherium">
-          <FaEthereum />
-          اتریوم
-        </h3>
-        <ReactApexChart
-          options={options}
-          series={[{ name: "اتریوم", data: ethereumData }]}
-          type="line"
-          height={300}
-        />
-      </div>
-
-      {/*}
+    <div className="mx-5 mt-5">
+      <Row>
         <Col lg={6} md={6} className="mb-4">
-          <div className={style.chartContainer} style={{ width: "100%" }}>
-            <h3 data-testid="etherium">
+          <div className={style.chartContainer}>
+            <h3 data-testid="ethereum">
               <FaEthereum />
               اتریوم
             </h3>
@@ -163,9 +154,9 @@ const CryptoCharts = () => {
             />
           </div>
         </Col>
-        <Col lg={12} md={12} className="mb-4">
+        <Col lg={6} md={6} className="mb-4">
           <div className={style.chartContainer} style={{ width: "100%" }}>
-            <h3 data-testid="bitCoin">
+            <h3 data-testid="bitcoin">
               <FaBitcoin />
               بیت‌کوین
             </h3>
@@ -177,10 +168,12 @@ const CryptoCharts = () => {
             />
           </div>
         </Col>
+      </Row>
+      <Row>
         <Col lg={6} md={6} className="mb-4">
           <div className={style.chartContainer} style={{ width: "100%" }}>
-            <h3 data-testid="lightcoin">
-              <FaCopyright />
+            <h3 data-testid="litecoin">
+              <FaChartLine />
               لایت‌کوین
             </h3>
             <ReactApexChart
@@ -193,19 +186,19 @@ const CryptoCharts = () => {
         </Col>
         <Col lg={6} md={6} className="mb-4">
           <div className={style.chartContainer} style={{ width: "100%" }}>
-            <h3 data-testid="dogeCoin">
+            <h3 data-testid="dogecoin">
               <FaCodepen />
               دوج کوین
             </h3>
             <ReactApexChart
               options={options}
-              series={[{ name: "لایت‌کوین", data: litecoinData }]}
+              series={[{ name: "دوج کوین", data: litecoinData }]}
               type="line"
               height={300}
             />
           </div>
         </Col>
-  */}
+      </Row>
     </div>
   );
 };

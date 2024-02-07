@@ -26,6 +26,8 @@ function HomePage() {
       <div className={style.tablePage}>
         <Table />
         <SliderDark />
+        <Chart />
+        <SliderDark />
       </div>
       <div className="mt-5">
         <Card />
